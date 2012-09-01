@@ -3,6 +3,7 @@ var app = require('http').createServer(handler)
   , fs = require('fs')
 
 app.listen(8000);
+console.log('test');
 var oneSocket = null
 function handler (req, res) {
     console.log(req.url);
