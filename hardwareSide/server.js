@@ -2,7 +2,7 @@ var server = require('http').createServer(handler)
   , io = require('socket.io').listen(server)
   , fs = require('fs')
 
-server.listen(80);
+server.listen(8001);
 
 function handler (req, res) {
     fs.readFile(__dirname + '/view.html',
@@ -18,7 +18,7 @@ function handler (req, res) {
 }
 
 var SerialPort  = require('serialport2').SerialPort;
-var portName = '/dev/ttyUSB0';
+var portName = '/dev/tty.usbserial-A900GCAB';
 
 var sp = new SerialPort(); // instantiate the serial port.
 sp.open(portName, { // portName is instatiated to be COM3, replace as necessary

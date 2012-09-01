@@ -94,9 +94,9 @@ function draw(v,c,bc,w,h,value) {
 }
 
 function changeVideo(attribute,direction) {
-	vidData[attribute] += direction * .25
+	vidData[attribute] += direction * .5
 }
-var socket = io.connect('http://dev.vaishaal.com:8000');
+var socket = io.connect('http://10.10.64.99:8000');
 socket.on('brighter',function(data) {
 	console.log(data);
 	changeVideo(0,data);
