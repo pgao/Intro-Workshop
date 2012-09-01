@@ -1,8 +1,24 @@
+var server = require('http').createServer(handler)
+  , io = require('socket.io').listen(server)
+  , fs = require('fs')
+
+server.listen(80);
+
+function handler (req, res) {
+    fs.readFile(__dirname + '/view.html',
+        function (err, data) {
+            if (err) {
+                res.writeHead(500);
+                return res.end('Error loading view.html');
+            }
+            res.writeHead(200);
+            res.end(data);
+        }
+    );
+}
+
 var SerialPort  = require('serialport2').SerialPort;
 var portName = '/dev/ttyUSB0';
-
-var io = require('socket.io').listen(8000); // server listens for socket.io communication at port 8000
-io.set('log level', 1); // disables debugging. this is optional. you may remove it if desired.
 
 var sp = new SerialPort(); // instantiate the serial port.
 sp.open(portName, { // portName is instatiated to be COM3, replace as necessary
@@ -11,18 +27,6 @@ sp.open(portName, { // portName is instatiated to be COM3, replace as necessary
    parity: 'none', // this is the default for Arduino serial communication
    stopBits: 1, // this is the default for Arduino serial communication
    flowControl: false // this is the default for Arduino serial communication
-});
-
-io.sockets.on('connection', function (socket) {
-    // If socket.io receives message from the client browser then 
-    // this call back will be executed.
-    socket.on('message', function (msg) {
-        console.log(msg);
-    });
-    // If a web browser disconnects from Socket.IO then this callback is called.
-    socket.on('disconnect', function () {
-        console.log('disconnected');
-    });
 });
 
 var cleanData = ''; // this stores the clean data
@@ -34,6 +38,13 @@ sp.on('data', function (data) { // call back when data is received
     if (readData.indexOf('B') >= 0 && readData.indexOf('A') >= 0) {
         cleanData = readData.substring(readData.indexOf('A') + 1, readData.indexOf('B'));
         readData = '';
-        io.sockets.emit('message', cleanData);
+        io.sockets.on('connection', function (socket) {
+          socket.on('event', function() {
+            console.log("blabla");
+          });
+          io.sockets.emit('message', cleanData);
+        });
+        console.log(cleanData);
     }
 });
+

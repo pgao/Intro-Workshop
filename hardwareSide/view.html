@@ -1,25 +1,21 @@
 <html>
 	<head>
-		<link media="screen" type="text/css" href="style.css" rel="stylesheet">
-
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$("#turnOn").click(function(){
-					$(document).append("turn on");
-				});
-				$("#turnOff").click(function(){
-					$(document).append("turn off");
+		<script type="text/javascript" src="http://cdn.socket.io/stable/socket.io.js"></script>
+
+		<script>
+			$(document).ready(function() {
+				//$("#data").text("lolol");
+				var socket = io.connect("http://localhost");
+				socket.on('message', function(msg){
+					document.write("received " + msg);
+					$("#data").text(msg);
 				});
 			});
 		</script>
 	</head>
 
 	<body>
-		<center><button id="turnOn" class="punch">Turn On</button></center>
-		<br>
-		<br>
-		<br>
-		<center><button id="turnOff" class="punch">Turn Off</button></center>
+		<div id="data">0.0</div>
 	</body>
 </html>
