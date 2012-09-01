@@ -1,41 +1,20 @@
-var http = require("http");
-var fs = require("fs");
-var path = require("path");
+var app = require('http').createServer(handler)
+  , io = require('socket.io').listen(app)
+  , fs = require('fs')
 
-http.createServer(function(request, response) {
-    console.log(request.url);
-    /*if(request.url.indexOf("view") != -1) {
-    	filePath = "view.html";
+app.listen(8000);
+var oneSocket = null
+function handler (req, res) {
+  fs.readFile(__dirname + '/view.html',
+  function (err, data) {
+    if (err) {
+      res.writeHead(500);
+      return res.end('Error loading index.html');
     }
 
-    fs.readFile(filePath, function(error, content) {
-        if (error) {
-            response.writeHead(500);
-            response.end();
-        }
-        else {
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end(content, 'utf-8');
-        }
-    });
+    res.writeHead(200);
+    res.end(data);
+  });
+}
 
-    path.exists(filePath, function(exists) {
-        if (exists) {
-            fs.readFile(filePath, function(error, content) {
-                if (error) {
-                    response.writeHead(500);
-                    response.end();
-                }
-                else {
-                    response.writeHead(200, { 'Content-Type': contentType });
-                    response.end(content, 'utf-8');
-                }
-            });
-        }
-        else {
-            response.writeHead(404);
-            response.end();
-        }
-    });*/
-}).listen(8888);
 
