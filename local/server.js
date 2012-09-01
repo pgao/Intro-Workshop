@@ -1,35 +1,18 @@
 var Serial = require('serialport'),
-	express = require('express'),
-	rest = require('restler'),
-	fs = require('fs');
+	express = require('express');
 
 var app = express(),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server);
 	
-var hub = "http://localhost:8000/hub",
-	port = "",
-	myName = "nelson",
-	audience = [];
+var port = "",
+	myName = "nelson";
 
-server.listen(80);
-
-rest.postJson(hub, {name: myName});
-
-app.get('/', function(req, res) {
-	fs.readFile(__dirname + '/index.html', function (err, data) {
-		if (err) {
-			console.log(err)
-		}
-		else {
-			res.end(data);
-		}
-	});
-});
+app.use('/', express.static(__dirname));
 
 io.sockets.on('connection', function (socket) {
 	socket.emit('welcome', {name: myName});
-	
+	/*
 	socket.on('set name', function(name) {
 		socket.set('name', name, function() {
 			audience.push(socket);
@@ -47,16 +30,15 @@ io.sockets.on('connection', function (socket) {
 		}
 		socket.emit('audience', {audience: names});
 	});
+	*/
 });
 
-
-var Port = new Serial.SerialPort(process.argv[2], {
+var Port = new Serial.SerialPort(port, {
 	parser: Serial.parsers.readline('\n')
 });
 
 Port.on("data", function(data) {
-	for (var i=0; i<audience.length; i++) {
-		audience[i].emit("control", JSON.parse(data));
-	}
+	io.sockets.emit("control", JSON.parse(data));
 });
 
+server.listen(8000);
