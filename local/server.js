@@ -16,25 +16,6 @@ io.sockets.on('connection', function (socket) {
 	socket.on('colorchange', function (data) {
 		io.sockets.emit(data['color'],data['sign']);
 	});
-	/*
-	socket.on('set name', function(name) {
-		socket.set('name', name, function() {
-			audience.push(socket);
-			socket.emit('begin');
-		});
-	});
-	
-	socket.on('list audience', function (data) {
-		var names = [];
-		
-		for (var i=0; i<audience.length; i++) {
-			audience[i].get('name', function(err, name) {
-				names.push(err ? "connecting..." : name);
-			});
-		}
-		socket.emit('audience', {audience: names});
-	});
-	*/
 });
 
 var Port = new Serial.SerialPort(port, {
@@ -42,7 +23,10 @@ var Port = new Serial.SerialPort(port, {
 });
 
 Port.on("data", function(data) {
-	io.sockets.emit("control", JSON.parse(data));
+    if (!isNaN(data)) {
+        var value = parseInt(data);
+	    io.sockets.emit("red", value);
+    };
 });
 
 server.listen(8000);
