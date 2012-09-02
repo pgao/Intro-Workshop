@@ -1,32 +1,15 @@
-/*
- HC-SR04 Ping distance sensor]
- VCC to arduino 5v GND to arduino GND
- Echo to Arduino pin 13 Trig to Arduino pin 12
- More info at: http://goo.gl/kJ8Gl
- */
-
-#define trigPin 12
-#define echoPin 11
-
-void setup() {
-  Serial.begin (9600);
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-}
-
-void loop() {
-  int duration, distance;
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(1000);
-  digitalWrite(trigPin, LOW);
-  duration = pulseIn(echoPin, HIGH);
-  distance = (duration/2) / 29.1;
-  if (distance >= 200 || distance <= 0){
-    Serial.println("Out of range");
+#include <Ultrasonic.h>
+  
+  int TriggerP = 12; // Trigger Pin for Sensor
+  int EchoP = 11; // Echo Pin for Sensor
+     
+  Ultrasonic ultrasonic(TriggerP,EchoP);   
+   
+  void setup() {
+    Serial.begin(9600);
   }
-  else {
-    Serial.print(distance);
-    Serial.println(" cm");
+
+  void loop() {
+    Serial.println(ultrasonic.Ranging(CM)); // Get Range in Centimetres
+    delay(500);
   }
-  delay(500);
-}
