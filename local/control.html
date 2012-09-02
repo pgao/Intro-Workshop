@@ -1,0 +1,17 @@
+<html>
+	<input id="brighter" type="button" value="brighter" onclick="changeVideo('brighter',1);" />
+		<input id="darker" type="button" value="darker" onclick="changeVideo('brighter',-1);" />
+		<input id="morered" type="button" value="More Red" onclick="changeVideo('red',1)" />
+		<input id="lessred" type="button" value="Less Red" onclick="changeVideo('red',-1);" />
+		<input id="moreblue" type="button" value="More Green" onclick="changeVideo('green',1);" />
+		<input id="lessblue" type="button" value="Less Green" onclick="changeVideo('green',-1);" />
+		<input id="moreblue" type="button" value="More Blue" onclick="changeVideo('blue',1);" />
+		<input id="lessblue" type="button" value="Less Blue" onclick="changeVideo('blue',-1);" />
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			 var socket = io.connect('http://localhost:8000');
+			 socket.emit('my other event', { my: 'data' });
+			 function changeVideo(color,sign) { 
+					socket.emit("colorchange",{'color':color,'sign':sign});
+			}
+		</script>

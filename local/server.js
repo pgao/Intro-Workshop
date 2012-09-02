@@ -5,13 +5,17 @@ var app = express(),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server);
 	
-var port = "",
+var port = "/dev/ttyUSB0",
 	myName = "nelson";
 
 app.use('/', express.static(__dirname));
 
 io.sockets.on('connection', function (socket) {
 	socket.emit('welcome', {name: myName});
+	
+	socket.on('colorchange', function (data) {
+		io.sockets.emit(data['color'],data['sign']);
+	});
 	/*
 	socket.on('set name', function(name) {
 		socket.set('name', name, function() {
