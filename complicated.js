@@ -1,4 +1,5 @@
-	var drawTimeout = null;	
+	
+		var drawTimeout = null;	
 		document.addEventListener('DOMContentLoaded', function(){
     var v = document.getElementById('v');
     var canvas = document.getElementById('c');
@@ -44,25 +45,5 @@ function draw(v,c,bc,w,h,value) {
 }
 
 function changeVideo(attribute,direction) {
-	vidData[attribute] += direction * .25
+	vidData[attribute] += direction * .5
 }
-var socket = io.connect('http://dev.vaishaal.com:8000');
-socket.on('brighter',function(data) {
-	console.log(data);
-	changeVideo(0,data);
-})
-socket.on('red',function(data) {
-	changeVideo(1,data);
-})
-socket.on('blue',function(data) {
-	changeVideo(3,data);
-})
-socket.on('green',function(data) {
-
-	changeVideo(2,data);
-})
-
-function clear() {
-	clearTimeout(drawTimeout);
-}
-
