@@ -1,9 +1,4 @@
 var express = require('express');
-var app = express(),
-	server = require('http').createServer(app)
-
+var app = express();
 app.use('/', express.static(__dirname));
-
-
-
-server.listen(8000);
+app.listen(8000);

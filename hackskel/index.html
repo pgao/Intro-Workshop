@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<script src="video.js"></script>
+		<script src="complicated.js"></script>
+		<title>Vaishaal's Instabooth</title>
+	</head>
+	<body>
+		<h1>VAISHAAL SHANKAR is hawt</h1>
+		<video id="v"></video>
+		<canvas id="c"></canvas>
+		<script>
+			var vidData = [1, 1, 1, 1]; //bright,r,g,b
+			function changeVideo(i, value) {
+				value = value/50;
+				vidData[i] = value;
+			}
+		</script>
+		<div>
+			Brightness
+			<input type="range" min="0" max="150" value="75" step="1" onchange="changeVideo(0, this.value)"></input>
+			Red	
+			<input type="range" min="0" max="150" value="75" step="1"  onchange="changeVideo(1, this.value)"></input>
+			Green
+			<input type="range" min="0" max="150" value="75" step="1" onchange="changeVideo(2, this.value)"></input>
+			Blue
+			<input type="range" min="0" max="150" value="75" step="1" onchange="changeVideo(3, this.value)"></input>
+		</div>
+	</body>
+</html>

@@ -44,3 +44,6 @@ function draw(v,c,bc,w,h,value) {
     drawTimeout = setTimeout(function(){ draw(v,c,bc,w,h,value); }, 0);
 }
 
+function changeVideo(attribute,direction) {
+	vidData[attribute] += direction * .5
+}
