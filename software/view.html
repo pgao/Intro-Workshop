@@ -15,29 +15,16 @@
 				value = direction/50 ;
 				vidData[attribute] = value;
 			}
-			var socket = io.connect('http://10.10.64.99:8000');
-			socket.on('brighter',function(data) {
-				changeVideo(0,data);
-			})
-			socket.on('red',function(data) {
-				changeVideo(1,data);
-			})
-			socket.on('blue',function(data) {
-				changeVideo(3,data);
-			})
-			socket.on('green',function(data) {
-				changeVideo(2,data);
-			})
 </script> 
 <div>	
 	Brightness
-	<input type="range" min="0" max="150" value="50" step="1" onchange="changeVideo(0,this.value)" />
+	<input type="range" min="0" max="150" value="75" step="1" onchange="changeVideo(0,this.value)" />
 	RedScale
-	<input type="range" min="0" max="150" value="50" step="1" onchange="changeVideo(1,this.value)" />
+	<input type="range" min="0" max="150" value="75" step="1" onchange="changeVideo(1,this.value)" />
 	GreenScale
-	<input type="range" min="0" max="150" value="50" step="1" onchange="changeVideo(2,this.value)" />
+	<input type="range" min="0" max="150" value="75" step="1" onchange="changeVideo(2,this.value)" />
 	BlueScale
-	<input type="range" min="0" max="150" value="50" step="1" onchange="changeVideo(3,this.value)" />
+	<input type="range" min="0" max="150" value="75" step="1" onchange="changeVideo(3,this.value)" />
 </div>
 </html>
 
